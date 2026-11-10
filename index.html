@@ -1599,6 +1599,14 @@ html:not(.phone) .pj .pj-group.pj-lead .shots li:nth-child(2) img{ width:54%; po
 .phone .strip-next{ right:22px; }
 .phone .home > .skills-strip{ padding-bottom:280px; }
 @media (prefers-reduced-motion: reduce){ .strip-view{ overflow:hidden; } }
+/* Odin, Version 240: the Skills strip fills the whole screen under the top bar, so About stays out of sight until you scroll on; photos a little bigger to suit, still smaller than the project tiles */
+.home > .skills-strip{ box-sizing:border-box; min-height:var(--open-h, calc(100vh - var(--bar))); padding-bottom:56px; display:flex; flex-direction:column; }
+.home > .skills-strip .strip-wrap{ flex:1; display:flex; align-items:center; }
+.home > .skills-strip .strip-view{ width:100%; }
+.strip-tile{ width:600px; height:450px; }
+.phone .strip-tile{ width:800px; height:620px; }
+.phone .home > .skills-strip{ padding-bottom:72px; }
+.home > .skills-strip{ min-height:calc(var(--open-h, calc(100vh - var(--bar))) + 16px); }
 
 </style>
 <style id="cssLight" media="not all">
@@ -3191,6 +3199,14 @@ html:not(.phone) .pj .pj-group.pj-lead .shots li:nth-child(2) img{ width:54%; po
 .phone .strip-next{ right:22px; }
 .phone .home > .skills-strip{ padding-bottom:280px; }
 @media (prefers-reduced-motion: reduce){ .strip-view{ overflow:hidden; } }
+/* Odin, Version 240: the Skills strip fills the whole screen under the top bar, so About stays out of sight until you scroll on; photos a little bigger to suit, still smaller than the project tiles */
+.home > .skills-strip{ box-sizing:border-box; min-height:var(--open-h, calc(100vh - var(--bar))); padding-bottom:56px; display:flex; flex-direction:column; }
+.home > .skills-strip .strip-wrap{ flex:1; display:flex; align-items:center; }
+.home > .skills-strip .strip-view{ width:100%; }
+.strip-tile{ width:600px; height:450px; }
+.phone .strip-tile{ width:800px; height:620px; }
+.phone .home > .skills-strip{ padding-bottom:72px; }
+.home > .skills-strip{ min-height:calc(var(--open-h, calc(100vh - var(--bar))) + 16px); }
 
 :root{ --on-tan:#000000; --spot:#8DC6AC; }
 [style*="--size"]{ background:#FFFFFF !important; }
