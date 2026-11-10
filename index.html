@@ -1574,6 +1574,15 @@ html:not(.phone) .pj .pj-group.pj-lead .shots li:nth-child(2) img{ width:54%; po
 @keyframes strip-go{ from{ transform:translateX(-50%); } to{ transform:translateX(0); } }
 .phone .strip-tile{ width:520px; height:400px; }
 @media (prefers-reduced-motion: reduce){ .strip-track{ animation:none; } .strip-view{ overflow-x:auto; } }
+/* Odin, Version 238: the Skills strip sits higher, with a clear gap below it, so About and Contact fill the gap before they reach it */
+.skills-strip{ padding-bottom:260px; }
+.phone .skills-strip{ padding-bottom:300px; }
+/* Odin, Version 238: the Skills strip runs the full page width after the photos, leads About and Contact over them, and the name catches on it */
+.home > .skills-strip{ position:relative; z-index:2; margin-top:calc(-1 * var(--cover, 0px)); background:var(--bg); padding:56px 0 120px 0; }
+.home > .skills-strip + .about{ margin-top:0; }
+.home > .skills-strip .strip-title{ padding-left:20px; }
+.phone .home > .skills-strip{ padding-bottom:140px; }
+.phone .home > .skills-strip .strip-title{ padding-left:22px; }
 
 </style>
 <style id="cssLight" media="not all">
@@ -3141,6 +3150,15 @@ html:not(.phone) .pj .pj-group.pj-lead .shots li:nth-child(2) img{ width:54%; po
 @keyframes strip-go{ from{ transform:translateX(-50%); } to{ transform:translateX(0); } }
 .phone .strip-tile{ width:520px; height:400px; }
 @media (prefers-reduced-motion: reduce){ .strip-track{ animation:none; } .strip-view{ overflow-x:auto; } }
+/* Odin, Version 238: the Skills strip sits higher, with a clear gap below it, so About and Contact fill the gap before they reach it */
+.skills-strip{ padding-bottom:260px; }
+.phone .skills-strip{ padding-bottom:300px; }
+/* Odin, Version 238: the Skills strip runs the full page width after the photos, leads About and Contact over them, and the name catches on it */
+.home > .skills-strip{ position:relative; z-index:2; margin-top:calc(-1 * var(--cover, 0px)); background:var(--bg); padding:56px 0 120px 0; }
+.home > .skills-strip + .about{ margin-top:0; }
+.home > .skills-strip .strip-title{ padding-left:20px; }
+.phone .home > .skills-strip{ padding-bottom:140px; }
+.phone .home > .skills-strip .strip-title{ padding-left:22px; }
 
 :root{ --on-tan:#000000; --spot:#8DC6AC; }
 [style*="--size"]{ background:#FFFFFF !important; }
@@ -3205,12 +3223,12 @@ html:not(.phone) .pj .pj-group.pj-lead .shots li:nth-child(2) img{ width:54%; po
     </a></li>
   </ul>
 </section>
+</div>
+</div>
 <section class="skills-strip" aria-label="Skills">
   <h2 class="section-title strip-title"><a href="#p-skills">Skills</a></h2>
   <div class="strip-view"><div class="strip-track"><a class="strip-tile" href="#p-cad" aria-label="CAD" title="CAD"><img src="assets/raw_w3.jpg" alt="" width="2400" height="2265" class="fit-contain" loading="lazy" decoding="async"></a><a class="strip-tile" href="#p-sketching" aria-label="Digital Sketching" title="Digital Sketching"><img src="assets/sk-shoe-hero.jpg" alt="" width="2000" height="1376" class="fit-contain" loading="lazy" decoding="async"></a><a class="strip-tile" href="#p-paper" aria-label="Paper Sketching" title="Paper Sketching"><img src="assets/ps-hilt-3.jpg" alt="" width="2200" height="1716" class="fit-contain" loading="lazy" decoding="async"></a><a class="strip-tile" href="#p-realization" aria-label="3D Realization" title="3D Realization"><img src="assets/r3d-car-3.webp" alt="" width="1724" height="1161" class="fit-contain" loading="lazy" decoding="async"></a><a class="strip-tile" href="#p-cad" aria-hidden="true" tabindex="-1" aria-label="CAD" title="CAD"><img src="assets/raw_w3.jpg" alt="" width="2400" height="2265" class="fit-contain" loading="lazy" decoding="async"></a><a class="strip-tile" href="#p-sketching" aria-hidden="true" tabindex="-1" aria-label="Digital Sketching" title="Digital Sketching"><img src="assets/sk-shoe-hero.jpg" alt="" width="2000" height="1376" class="fit-contain" loading="lazy" decoding="async"></a><a class="strip-tile" href="#p-paper" aria-hidden="true" tabindex="-1" aria-label="Paper Sketching" title="Paper Sketching"><img src="assets/ps-hilt-3.jpg" alt="" width="2200" height="1716" class="fit-contain" loading="lazy" decoding="async"></a><a class="strip-tile" href="#p-realization" aria-hidden="true" tabindex="-1" aria-label="3D Realization" title="3D Realization"><img src="assets/r3d-car-3.webp" alt="" width="1724" height="1161" class="fit-contain" loading="lazy" decoding="async"></a></div></div>
 </section>
-</div>
-</div>
 
 <section class="about" id="about" aria-labelledby="aboutTitle">
   <figure class="about-photo" data-reveal><img src="assets/about.jpg" alt="Odin Colwell standing on the rocks by the ocean" width="599" height="851" loading="lazy" decoding="async"></figure>
@@ -3895,7 +3913,7 @@ html:not(.phone) .pj .pj-group.pj-lead .shots li:nth-child(2) img{ width:54%; po
 // ---- home: the projects hold still once the name reaches About; About and Contact then slide over them, moving with the name ----
 (function(){
   var home = document.querySelector('.home'), main = document.querySelector('.home-main'), hero = document.querySelector('.home-split .hero');
-  var about = document.getElementById('about'), foot = document.getElementById('contact');
+  var about = document.getElementById('about'), foot = document.getElementById('contact'), strip = document.querySelector('.home > .skills-strip');
   if (!home || !main || !hero || !about || !foot) return;
   var stage = hero.offsetHeight;
   function pin(){
@@ -3905,7 +3923,8 @@ html:not(.phone) .pj .pj-group.pj-lead .shots li:nth-child(2) img{ width:54%; po
     var unzoom = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--unzoom')) || 1;
     home.style.setProperty('--split-h', h + 'px');
     home.style.setProperty('--pin-top', Math.min(top, top + stage - h) + 'px');
-    var cover = Math.min(about.offsetHeight + foot.offsetHeight, document.documentElement.clientHeight * unzoom);
+    // Odin, Version 238: the Skills strip leads the slide-over, so the name catches on it
+    var cover = Math.min((strip ? strip.offsetHeight : 0) + about.offsetHeight + foot.offsetHeight, document.documentElement.clientHeight * unzoom);
     home.style.setProperty('--cover', cover + 'px');
     home.style.setProperty('--split-row', (h + cover) + 'px');
     lift();
