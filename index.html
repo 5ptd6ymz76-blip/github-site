@@ -1583,6 +1583,22 @@ html:not(.phone) .pj .pj-group.pj-lead .shots li:nth-child(2) img{ width:54%; po
 .home > .skills-strip .strip-title{ padding-left:20px; }
 .phone .home > .skills-strip{ padding-bottom:140px; }
 .phone .home > .skills-strip .strip-title{ padding-left:22px; }
+/* Odin, Version 239: arrows on both ends of the Skills strip; the strip holds under the top bar while About slides over it, with a bigger gap before About */
+.home > .skills-strip{ position:sticky; top:var(--bar); padding-bottom:240px; }
+.home > .skills-strip + .about{ z-index:3; }
+.strip-wrap{ position:relative; }
+.strip-track{ animation:none; will-change:transform; }
+.strip-arrow{ position:absolute; top:50%; transform:translateY(-50%); z-index:2; width:64px; height:64px; border:0; border-radius:50%; padding:16px; background:var(--spot); color:var(--on-tan); cursor:pointer; display:grid; place-items:center; transition:transform .2s ease; }
+.strip-arrow svg{ width:100%; height:100%; display:block; }
+.strip-arrow:hover{ transform:translateY(-50%) scale(1.08); }
+.strip-arrow:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; }
+.strip-prev{ left:20px; }
+.strip-next{ right:20px; }
+.phone .strip-arrow{ width:96px; height:96px; padding:24px; }
+.phone .strip-prev{ left:22px; }
+.phone .strip-next{ right:22px; }
+.phone .home > .skills-strip{ padding-bottom:280px; }
+@media (prefers-reduced-motion: reduce){ .strip-view{ overflow:hidden; } }
 
 </style>
 <style id="cssLight" media="not all">
@@ -3159,6 +3175,22 @@ html:not(.phone) .pj .pj-group.pj-lead .shots li:nth-child(2) img{ width:54%; po
 .home > .skills-strip .strip-title{ padding-left:20px; }
 .phone .home > .skills-strip{ padding-bottom:140px; }
 .phone .home > .skills-strip .strip-title{ padding-left:22px; }
+/* Odin, Version 239: arrows on both ends of the Skills strip; the strip holds under the top bar while About slides over it, with a bigger gap before About */
+.home > .skills-strip{ position:sticky; top:var(--bar); padding-bottom:240px; }
+.home > .skills-strip + .about{ z-index:3; }
+.strip-wrap{ position:relative; }
+.strip-track{ animation:none; will-change:transform; }
+.strip-arrow{ position:absolute; top:50%; transform:translateY(-50%); z-index:2; width:64px; height:64px; border:0; border-radius:50%; padding:16px; background:var(--spot); color:var(--on-tan); cursor:pointer; display:grid; place-items:center; transition:transform .2s ease; }
+.strip-arrow svg{ width:100%; height:100%; display:block; }
+.strip-arrow:hover{ transform:translateY(-50%) scale(1.08); }
+.strip-arrow:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; }
+.strip-prev{ left:20px; }
+.strip-next{ right:20px; }
+.phone .strip-arrow{ width:96px; height:96px; padding:24px; }
+.phone .strip-prev{ left:22px; }
+.phone .strip-next{ right:22px; }
+.phone .home > .skills-strip{ padding-bottom:280px; }
+@media (prefers-reduced-motion: reduce){ .strip-view{ overflow:hidden; } }
 
 :root{ --on-tan:#000000; --spot:#8DC6AC; }
 [style*="--size"]{ background:#FFFFFF !important; }
@@ -3227,7 +3259,10 @@ html:not(.phone) .pj .pj-group.pj-lead .shots li:nth-child(2) img{ width:54%; po
 </div>
 <section class="skills-strip" aria-label="Skills">
   <h2 class="section-title strip-title"><a href="#p-skills">Skills</a></h2>
+  <div class="strip-wrap">
   <div class="strip-view"><div class="strip-track"><a class="strip-tile" href="#p-cad" aria-label="CAD" title="CAD"><img src="assets/raw_w3.jpg" alt="" width="2400" height="2265" class="fit-contain" loading="lazy" decoding="async"></a><a class="strip-tile" href="#p-sketching" aria-label="Digital Sketching" title="Digital Sketching"><img src="assets/sk-shoe-hero.jpg" alt="" width="2000" height="1376" class="fit-contain" loading="lazy" decoding="async"></a><a class="strip-tile" href="#p-paper" aria-label="Paper Sketching" title="Paper Sketching"><img src="assets/ps-hilt-3.jpg" alt="" width="2200" height="1716" class="fit-contain" loading="lazy" decoding="async"></a><a class="strip-tile" href="#p-realization" aria-label="3D Realization" title="3D Realization"><img src="assets/r3d-car-3.webp" alt="" width="1724" height="1161" class="fit-contain" loading="lazy" decoding="async"></a><a class="strip-tile" href="#p-cad" aria-hidden="true" tabindex="-1" aria-label="CAD" title="CAD"><img src="assets/raw_w3.jpg" alt="" width="2400" height="2265" class="fit-contain" loading="lazy" decoding="async"></a><a class="strip-tile" href="#p-sketching" aria-hidden="true" tabindex="-1" aria-label="Digital Sketching" title="Digital Sketching"><img src="assets/sk-shoe-hero.jpg" alt="" width="2000" height="1376" class="fit-contain" loading="lazy" decoding="async"></a><a class="strip-tile" href="#p-paper" aria-hidden="true" tabindex="-1" aria-label="Paper Sketching" title="Paper Sketching"><img src="assets/ps-hilt-3.jpg" alt="" width="2200" height="1716" class="fit-contain" loading="lazy" decoding="async"></a><a class="strip-tile" href="#p-realization" aria-hidden="true" tabindex="-1" aria-label="3D Realization" title="3D Realization"><img src="assets/r3d-car-3.webp" alt="" width="1724" height="1161" class="fit-contain" loading="lazy" decoding="async"></a></div></div>
+  <button class="strip-arrow strip-prev" type="button" aria-label="Previous skill"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M50 32H16M30 16L14 32l16 16" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square"/></svg></button><button class="strip-arrow strip-next" type="button" aria-label="Next skill"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 32h34M34 16l16 16-16 16" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="square"/></svg></button>
+  </div>
 </section>
 
 <section class="about" id="about" aria-labelledby="aboutTitle">
@@ -4345,6 +4380,33 @@ html:not(.phone) .pj .pj-group.pj-lead .shots li:nth-child(2) img{ width:54%; po
     if (go) off += dt * H / 9;   // a word crosses the column in about 9 seconds
     place();
   }
+  requestAnimationFrame(frame);
+})();
+
+// ---- Odin, Version 239: the Skills strip glides left to right on its own; the arrows step it one tile either way ----
+(function(){
+  var view = document.querySelector('.strip-view'), track = view && view.querySelector('.strip-track');
+  if (!track) return;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var x = 0, push = 0, last = 0, held = false;
+  function half(){ return track.scrollWidth / 2; }
+  function stepW(){ var t = track.querySelector('.strip-tile'); return t ? t.offsetWidth + (parseFloat(getComputedStyle(t).marginRight) || 0) : 300; }
+  function frame(t){
+    var dt = last ? Math.min(t - last, 50) : 0; last = t;
+    var h = half();
+    if (h) {
+      var glide = (held || reduce) ? 0 : h / 70000 * dt;
+      var d = push * Math.min(1, dt / 140); push -= d;
+      x = (((x + glide + d) % h) + h) % h;
+      track.style.transform = 'translateX(' + (x - h) + 'px)';
+    }
+    requestAnimationFrame(frame);
+  }
+  view.addEventListener('mouseenter', function(){ held = true; });
+  view.addEventListener('mouseleave', function(){ held = false; });
+  var prev = document.querySelector('.strip-prev'), next = document.querySelector('.strip-next');
+  if (prev) prev.addEventListener('click', function(){ push += stepW(); });
+  if (next) next.addEventListener('click', function(){ push -= stepW(); });
   requestAnimationFrame(frame);
 })();
 
