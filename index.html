@@ -1607,6 +1607,16 @@ html:not(.phone) .pj .pj-group.pj-lead .shots li:nth-child(2) img{ width:54%; po
 .phone .strip-tile{ width:800px; height:620px; }
 .phone .home > .skills-strip{ padding-bottom:72px; }
 .home > .skills-strip{ min-height:calc(var(--open-h, calc(100vh - var(--bar))) + 16px); }
+/* Odin, Version 241: Back and Forward buttons fixed to the bottom of the Projects panel, returning to wherever the visitor was last */
+.side-hist{ display:none; }
+html:not(.phone) .side-hist{ display:flex; position:fixed; right:0; bottom:0; width:var(--side-w, 292px); z-index:41; gap:8px; padding:12px 12px 16px; background:var(--spot); box-sizing:border-box; }
+html:not(.phone) .side{ padding-bottom:96px; }
+.phone body.side-open .side-hist{ display:flex; position:fixed; left:0; right:0; bottom:0; z-index:61; gap:12px; zoom:var(--unzoom); padding:12px 16px 20px; background:var(--spot); }
+.side-hist button{ flex:1; min-width:0; height:44px; border:2px solid var(--on-tan); border-radius:999px; background:transparent; color:var(--on-tan); font:inherit; font-variation-settings:'wdth' 125; font-weight:800; font-size:.78rem; letter-spacing:.02em; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:background-color .2s ease, color .2s ease, opacity .2s ease; }
+.side-hist button:not(:disabled):hover{ background:var(--on-tan); color:var(--spot); }
+.side-hist button:focus-visible{ outline:2px solid var(--on-tan); outline-offset:3px; }
+.side-hist button:disabled{ opacity:.35; cursor:default; }
+.phone body.side-open .side-hist button{ font-size:14px; height:48px; }
 
 </style>
 <style id="cssLight" media="not all">
@@ -3207,6 +3217,16 @@ html:not(.phone) .pj .pj-group.pj-lead .shots li:nth-child(2) img{ width:54%; po
 .phone .strip-tile{ width:800px; height:620px; }
 .phone .home > .skills-strip{ padding-bottom:72px; }
 .home > .skills-strip{ min-height:calc(var(--open-h, calc(100vh - var(--bar))) + 16px); }
+/* Odin, Version 241: Back and Forward buttons fixed to the bottom of the Projects panel, returning to wherever the visitor was last */
+.side-hist{ display:none; }
+html:not(.phone) .side-hist{ display:flex; position:fixed; right:0; bottom:0; width:var(--side-w, 292px); z-index:41; gap:8px; padding:12px 12px 16px; background:var(--spot); box-sizing:border-box; }
+html:not(.phone) .side{ padding-bottom:96px; }
+.phone body.side-open .side-hist{ display:flex; position:fixed; left:0; right:0; bottom:0; z-index:61; gap:12px; zoom:var(--unzoom); padding:12px 16px 20px; background:var(--spot); }
+.side-hist button{ flex:1; min-width:0; height:44px; border:2px solid var(--on-tan); border-radius:999px; background:transparent; color:var(--on-tan); font:inherit; font-variation-settings:'wdth' 125; font-weight:800; font-size:.78rem; letter-spacing:.02em; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:background-color .2s ease, color .2s ease, opacity .2s ease; }
+.side-hist button:not(:disabled):hover{ background:var(--on-tan); color:var(--spot); }
+.side-hist button:focus-visible{ outline:2px solid var(--on-tan); outline-offset:3px; }
+.side-hist button:disabled{ opacity:.35; cursor:default; }
+.phone body.side-open .side-hist button{ font-size:14px; height:48px; }
 
 :root{ --on-tan:#000000; --spot:#8DC6AC; }
 [style*="--size"]{ background:#FFFFFF !important; }
@@ -3241,6 +3261,10 @@ html:not(.phone) .pj .pj-group.pj-lead .shots li:nth-child(2) img{ width:54%; po
   <h2>Projects</h2>
   <h3>Process</h3><ul><li><a href="#p-scrubbers" data-side="scrubbers">Sudsy Scrubbers</a></li><li><a href="#p-light" data-side="light">Lamp Project</a></li><li><a href="#p-puzzle" data-side="puzzle">Puzzling</a></li><li><a href="#p-warmer" data-side="warmer">Hand warmer</a></li></ul><h3>General work</h3><ul><li><a href="#p-skills" data-side="skills">Skills</a></li></ul><h3>Research &amp; experience</h3><ul><li><a href="#p-wollastons" data-side="wollastons">Wollastons Case Study</a></li><li id="ownerPuffco" hidden><a href="https://claude.ai/artifact/Er2ULm3pJqkeNX94ZQoL6C" target="_blank" rel="noopener noreferrer">Puffco Redesign</a></li></ul>
 </aside>
+<nav class="side-hist" aria-label="Back and forward">
+  <button type="button" id="histBack" disabled><span aria-hidden="true">&larr;</span> Back</button>
+  <button type="button" id="histFwd" disabled>Forward <span aria-hidden="true">&rarr;</span></button>
+</nav>
 
 <div id="top"></div>
 
@@ -4424,6 +4448,43 @@ html:not(.phone) .pj .pj-group.pj-lead .shots li:nth-child(2) img{ width:54%; po
   if (prev) prev.addEventListener('click', function(){ push += stepW(); });
   if (next) next.addEventListener('click', function(){ push -= stepW(); });
   requestAnimationFrame(frame);
+})();
+
+// ---- Odin, Version 241: Back and Forward on the Projects panel. The site keeps its own list of where the visitor has been, with the scroll spot for each, so it never steps outside the portfolio ----
+(function(){
+  var back = document.getElementById('histBack'), fwd = document.getElementById('histFwd');
+  if (!back || !fwd) return;
+  function cur(){ return location.hash === '#' ? '' : location.hash; }
+  var list = [{ h:cur(), y:window.scrollY }], i = 0, moving = false;
+  function update(){ back.disabled = i <= 0; fwd.disabled = i >= list.length - 1; }
+  window.addEventListener('scroll', function(){ if (!moving && cur() === list[i].h) list[i].y = window.scrollY; }, { passive:true });
+  // note the scroll spot at the moment a link is clicked, too
+  document.addEventListener('click', function(ev){ if (!moving && ev.target.closest && ev.target.closest('a[href^="#"]') && cur() === list[i].h) list[i].y = window.scrollY; }, true);
+  var safety = 0;
+  function restore(){
+    var y = list[i].y;
+    setTimeout(function(){ window.scrollTo({ top:y, behavior:'instant' }); moving = false; clearTimeout(safety); }, 90);
+  }
+  window.addEventListener('hashchange', function(){
+    var h = cur();
+    if (moving) { if (h === list[i].h) restore(); return; }
+    // the old part links pass straight through to Skills, so only Skills is kept
+    if (h === list[i].h || /^#p-(cad|sketching|paper|realization)$/.test(h)) return;
+    list = list.slice(0, i + 1); list.push({ h:h, y:0 }); i++;
+    update();
+  });
+  // Back and Forward jump straight to the saved page and scroll spot, without the slide, so the spot is exact
+  function go(d){
+    var j = i + d;
+    if (j < 0 || j >= list.length) return;
+    if (cur() === list[i].h) list[i].y = window.scrollY;
+    i = j; moving = true; update();
+    clearTimeout(safety); safety = setTimeout(function(){ moving = false; }, 2500);
+    if (cur() === list[i].h) restore(); else location.hash = list[i].h || '#';
+  }
+  back.addEventListener('click', function(){ go(-1); });
+  fwd.addEventListener('click', function(){ go(1); });
+  update();
 })();
 
 </script>
